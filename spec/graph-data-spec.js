@@ -1,9 +1,24 @@
 describe("GraphData", function() {
-  var graphData, data;
+  var graphData, data, statuses;
 
   beforeEach(function() {
+    statuses = [
+      {
+        name: 'assigned',
+        hex:  '#DDE1E4'
+      }, {
+        name: 'inProgress',
+        hex:  '#EDA72A'
+      }, {
+        name: 'forReview',
+        hex:  '#33ACE0'
+      }, {
+        name: 'delivered',
+        hex:  '#CCE7AE'
+      }
+    ]
     data = MockData.graphOne;
-    graphData = new GraphData(data);
+    graphData = new GraphData(data, statuses);
   });
 
   it("remembers the original data", function() {

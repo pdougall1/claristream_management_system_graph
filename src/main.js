@@ -1,5 +1,20 @@
 var onLoadCallback = function () {
-  var graphs = data;
+  var graphOne = MockData.graphOne;
+  var statuses = [
+    {
+      name: 'assigned',
+      hex:  '#DDE1E4'
+    }, {
+      name: 'inProgress',
+      hex:  '#EDA72A'
+    }, {
+      name: 'forReview',
+      hex:  '#33ACE0'
+    }, {
+      name: 'delivered',
+      hex:  '#CCE7AE'
+    }
+  ]
 
   // I suggest just binding to the height and width of the containting element
   // this makes it easier to manage things with CSS
@@ -7,7 +22,7 @@ var onLoadCallback = function () {
   var element    = $(id)
   var maxHeight  = element.height();
   var maxWidth   = element.width();
-  var graphData = new GraphData(graphs['graphOne'], statuses);
+  var graphData = new GraphData(graphOne, statuses);
 
   // establish margins so axes can fit
   var margin = {top: 20, right: 20, bottom: 30, left: 40},
