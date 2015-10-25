@@ -22,7 +22,7 @@ describe("GraphData", function() {
   });
 
   it("remembers the original data", function() {
-    expect(graphData.originalData).toEqual(data);
+    expect(graphData.data).toEqual(data);
   });
 
   it('knows the names of ranges', function() {

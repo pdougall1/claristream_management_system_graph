@@ -21,40 +21,76 @@ var sumOfValues = function (obj) {
 var GraphData = function (data, statuses) {
   // this could definitely use some attention
   // perhaps we need a range object?
-  this.parseData = function (data) {
-    var range, ranges, y0, _this;
-    _this = this;
+  this.addParsedData = function () {
+    var range, ranges, y0, data;
+    data = this.data;
     ranges = [];
     this.rangeNames.forEach( function(name) {
       range = { name: name };
       y0 = 0;
       range.statuses = [];
       statuses.forEach( function (status) {
-        var newStatus = $.extend({}, status);
-        newStatus.y0 = y0;
-        newStatus.y1 = y0 += _this.originalData[name][status.name];
-        range.statuses.push(newStatus);
+        if (!status.inactive) {
+          var newStatus = $.extend({}, status);
+          newStatus.y0 = y0;
+          newStatus.y1 = y0 += data[name][status.name];
+          range.statuses.push(newStatus);
+        }
       });
       ranges.push(range);
     });
-    return ranges;
+    this.parsedData = ranges;
   }
 
-  this.getMaxRange = function (data) {
-    var num, max;
+  this.dataUpdatedCallback = function () {
+    console.log('set a dataUpdatedCallback')
+  }
+
+  this.setDataUpdatedCallback = function (callback) {
+    this.dataUpdatedCallback = callback;
+  }
+
+  this.addMaxRange = function () {
+    var num, max, data;
+    data = this.parsedData;
     max = 0;
-    this.rangeNames.forEach( function (name) {
-      num = sumOfValues(data[name]);
-      if (num > max) { max = num }
+    data.forEach( function (range) {
+      if (range.statuses.length > 0) {
+        num = range.statuses[range.statuses.length - 1].y1
+        if (num > max) { max = num }
+      }
     });
-    return max;
+    this.maxRange = max;
+  }
+
+  this.makeActive = function (statusName) {
+    this.statuses.forEach( function (status) {
+      if (status.name == statusName) {
+        status.inactive = false;
+      }
+    });
+    this.buildData();
+  }
+
+  this.makeInactive = function (statusName) {
+    this.statuses.forEach( function (status) {
+      if (status.name == statusName) {
+        status.inactive = true;
+      }
+    });
+    this.buildData();
+  }
+
+  this.buildData = function () {
+    this.addParsedData();// ___ order dependancy
+    this.addMaxRange();  // _/
+    this.dataUpdatedCallback(this);
   }
 
   // ATTRIBUTES
-  this.originalData = data;
+  this.data = data;
   this.statuses = statuses;
   this.rangeNames = Object.keys(data);
   this.rangeCount = this.rangeNames.length
-  this.maxRange = this.getMaxRange(data);
-  this.parsedData = this.parseData(data);
+  this.buildData()
 }
