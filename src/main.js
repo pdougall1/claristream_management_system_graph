@@ -20,28 +20,23 @@ var onLoadCallback = function () {
   // this makes it easier to manage things with CSS
   var id         = "#stage";
   var element    = $(id)
-  var maxHeight  = element.height();
-  var maxWidth   = element.width();
-  var graphData = new GraphData(graphOne, statuses);
-
-  // establish margins so axes can fit
-  var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = maxWidth,
-    height = maxHeight;
+  var margins    = {top: 20, right: 20, bottom: 30, left: 40}
+  var dimensions = new Dimensions(element, margins)
+  var graphData  = new GraphData(graphOne, statuses);
 
   // create the basic svg element everything will hag on
   var stage = d3.select(id)
     .append("svg")
-    .attr("width", width)
-    .attr("height", height)
+    .attr("width", dimensions.width)
+    .attr("height", dimensions.height)
 
   // make some scales for the axes
   var xScale = d3.scale.ordinal()
-    .rangeRoundBands([0, width - margin.left - margin.right], .1)
+    .rangeRoundBands([0, dimensions.innerWidth], .1)
     .domain(graphData.rangeNames);
 
   var yScale = d3.scale.linear()
-    .range([height - margin.bottom, margin.top])
+    .range([dimensions.topGraphHeight, dimensions.topMargin])
     .domain([0, graphData.maxRange]);
 
   // make some axes
@@ -56,13 +51,13 @@ var onLoadCallback = function () {
   // add the axes
   stage.append("g")
     .attr("class", "x-axis")
-    .attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")")
+    .attr("transform", "translate(" + dimensions.leftMargin + "," + (dimensions.topGraphHeight) + ")")
     .attr("fill", '#7F8082')
     .call(xAxis);
 
   stage.append("g")
     .attr("class", "y-axis")
-    .attr("transform", "translate(" + margin.left + ",0)")
+    .attr("transform", "translate(" + dimensions.leftMargin + ",0)")
     .attr("fill", '#7F8082')
     .call(yAxis);
 
@@ -71,8 +66,8 @@ var onLoadCallback = function () {
     .data(yScale.ticks(graphData.maxRange))
     .enter().append("line")
     .attr("class", "horizontalGrid")
-    .attr("x1", margin.left)
-    .attr("x2", width - margin.right)
+    .attr("x1", dimensions.leftMargin)
+    .attr("x2", dimensions.leftGraphWidth)
     .attr("y1", function(d){ return yScale(d);})
     .attr("y2", function(d){ return yScale(d);})
     .attr("stroke", "#DEDFE0")
@@ -91,7 +86,7 @@ var onLoadCallback = function () {
     .data(function (d) { return d.statuses })
     .enter().append("rect")
     .attr("width", xScale.rangeBand())
-    .attr("x", margin.left)
+    .attr("x", dimensions.leftMargin)
     .attr("y", function(d) { return yScale(d.y1) })
     .attr("height", function(d) { return yScale(d.y0) - yScale(d.y1) })
     .style("fill", function(d) { return d.hex });
