@@ -1,0 +1,130 @@
+var getValues = function (obj) {
+  var values = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      values.push(obj[key]);
+    }
+  }
+  return values;
+};
+
+var sumOfValues = function (obj) {
+  return d3.sum(getValues(obj));
+}
+
+var statusColorHexes = statuses.map(function (color) { return color.hex });
+var statusColorNames = statuses.map(function (color) { return color.name });
+
+var onLoadCallback = function () {
+  var graphs = data;
+
+  // I suggest just binding to the height and width of the containting element
+  // this makes it easier to manage things with CSS
+  var id         = "#stage";
+  var element    = $(id)
+  var maxHeight  = element.height();
+  var maxWidth   = element.width();
+  var graphData  = graphs['graphOne'];
+  var rangeNames = Object.keys(graphs['graphOne']);
+  var rangeSums = rangeNames.map( function (name) {
+    return sumOfValues(graphData[name]);
+  });
+
+  var formattedData = rangeNames.map( function(name) {
+    var range = { name: name };
+    var y0 = 0;
+    range.statuses = statuses.map( function (status) {
+      var newStatus = $.extend({}, status);
+      newStatus.y0 = y0;
+      newStatus.y1 = y0 += graphData[name][status.name];
+      return newStatus;
+    });
+    return range;
+  });
+
+  // helpful to have some maxes
+  var numberOrRanges = rangeNames.length; // largest x val
+  var maxRange = d3.max(rangeSums);       // largest y val
+
+  // establish margins so axes can fit
+  var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = maxWidth,
+    height = maxHeight;
+
+  // create the basic svg element everything will hag on
+  var stage = d3.select(id)
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+
+  // make some scales for the axes
+  // splits up the width by num of items in domain
+  // I think it maps the name passed into range with the one passed into the function
+  var xScale = d3.scale.ordinal()
+    .rangeRoundBands([0, width - margin.left - margin.right], .1)
+    .domain(rangeNames);
+
+  var yScale = d3.scale.linear()
+    .range([height - margin.bottom, margin.top])
+    .domain([0, maxRange]);
+
+  // make some axes
+  var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+  var yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left");
+
+  stage.selectAll("line.horizontalGrid").data(yScale.ticks(maxRange)).enter()
+    .append("line")
+      .attr(
+      {
+        "class":"horizontalGrid",
+        "x1" : margin.left,
+        "x2" : width - margin.right,
+        "y1" : function(d){ return yScale(d);},
+        "y2" : function(d){ return yScale(d);},
+        "stroke" : "#DEDFE0",
+        "shape-rendering" : "crispEdges",
+        "stroke-width" : "1px"
+      });
+
+
+  // add the axes
+  stage.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")")
+    .attr("fill", '#7F8082')
+    .call(xAxis);
+
+  stage.append("g")
+    .attr("class", "y-axis")
+    .attr("transform", "translate(" + margin.left + ",0)")
+    .attr("fill", '#7F8082')
+    .call(yAxis);
+
+  // add ranges to the stage
+  var range = stage.selectAll(".range")
+    .data(formattedData)
+    .enter().append("g")
+    .attr("class", "g")
+    .attr("transform", function(d, i) { return "translate(" + xScale(i) + ",0)"; });
+
+  // // // add statuses to each range
+  range.selectAll("rect")
+    .data(function (d) {
+      return d.statuses
+    })
+    .enter().append("rect")
+    .attr("width", xScale.rangeBand())
+    .attr("x", margin.left)
+    .attr("y", function(d) { return yScale(d.y1) })
+    .attr("height", function(d) {
+      return yScale(d.y0) - yScale(d.y1)
+    })
+    .style("fill", function(d) { return d.hex });
+}
+
+window.addEventListener('load', onLoadCallback, false )
