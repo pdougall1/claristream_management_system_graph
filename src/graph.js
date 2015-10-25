@@ -49,7 +49,7 @@ var Graph = function (graphData, dimensions) {
   this.addHorizontalGridLines = function () {
     var yScale = this.yScale;
     this.horizontalGridLines = this.stage.selectAll("line.horizontalGrid")
-      .data(yScale.ticks(graphData.maxRange))
+      .data(yScale.ticks(this.graphData.maxRange))
       .enter().append("line")
       .attr("class", "horizontalGrid")
       .attr("x1", this.dimensions.leftMargin)
@@ -84,12 +84,6 @@ var Graph = function (graphData, dimensions) {
       .style("fill", function(d) { return d.hex });
   }
 
-  this.updataData = function(graphData) {
-    this.graphData = graphData;
-    this.stage.remove();
-    this.build();
-  }
-
   this.build = function () {
     this.addStage();
     this.setScales();
@@ -99,6 +93,24 @@ var Graph = function (graphData, dimensions) {
     this.addHorizontalGridLines();
     this.addRanges();
     this.addStatusesToEachRange();
+    this.setDataUpdatedCallback();
+  }
+
+  // ____________________________________________________________
+  // update graph when data is updataed
+  // ultimately this should be handled with transitions
+
+  this.updataData = function(newGraphData) {
+    this.graphData = newGraphData;
+    this.stage.remove();
+    this.build();
+  }
+
+  this.setDataUpdatedCallback = function () {
+    var _this = this;
+    this.graphData.setDataUpdatedCallback(function (newGraphData) {
+      _this.updataData(newGraphData);
+    });
   }
 
   this.build();
