@@ -24,27 +24,7 @@ var onLoadCallback = function () {
   var element    = $(id)
   var maxHeight  = element.height();
   var maxWidth   = element.width();
-  var graphData  = graphs['graphOne'];
-  var rangeNames = Object.keys(graphs['graphOne']);
-  var rangeSums = rangeNames.map( function (name) {
-    return sumOfValues(graphData[name]);
-  });
-
-  var formattedData = rangeNames.map( function(name) {
-    var range = { name: name };
-    var y0 = 0;
-    range.statuses = statuses.map( function (status) {
-      var newStatus = $.extend({}, status);
-      newStatus.y0 = y0;
-      newStatus.y1 = y0 += graphData[name][status.name];
-      return newStatus;
-    });
-    return range;
-  });
-
-  // helpful to have some maxes
-  var numberOrRanges = rangeNames.length; // largest x val
-  var maxRange = d3.max(rangeSums);       // largest y val
+  var graphData = new GraphData(graphs['graphOne'], statuses);
 
   // establish margins so axes can fit
   var margin = {top: 20, right: 20, bottom: 30, left: 40},
@@ -62,11 +42,11 @@ var onLoadCallback = function () {
   // I think it maps the name passed into range with the one passed into the function
   var xScale = d3.scale.ordinal()
     .rangeRoundBands([0, width - margin.left - margin.right], .1)
-    .domain(rangeNames);
+    .domain(graphData.rangeNames);
 
   var yScale = d3.scale.linear()
     .range([height - margin.bottom, margin.top])
-    .domain([0, maxRange]);
+    .domain([0, graphData.maxRange]);
 
   // make some axes
   var xAxis = d3.svg.axis()
@@ -77,7 +57,7 @@ var onLoadCallback = function () {
     .scale(yScale)
     .orient("left");
 
-  stage.selectAll("line.horizontalGrid").data(yScale.ticks(maxRange)).enter()
+  stage.selectAll("line.horizontalGrid").data(yScale.ticks(graphData.maxRange)).enter()
     .append("line")
       .attr(
       {
@@ -107,7 +87,7 @@ var onLoadCallback = function () {
 
   // add ranges to the stage
   var range = stage.selectAll(".range")
-    .data(formattedData)
+    .data(graphData.parsedData)
     .enter().append("g")
     .attr("class", "g")
     .attr("transform", function(d, i) { return "translate(" + xScale(i) + ",0)"; });
