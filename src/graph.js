@@ -1,20 +1,3 @@
-var getValues = function (obj) {
-  var values = [];
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      values.push(obj[key]);
-    }
-  }
-  return values;
-};
-
-var sumOfValues = function (obj) {
-  return d3.sum(getValues(obj));
-}
-
-var statusColorHexes = statuses.map(function (color) { return color.hex });
-var statusColorNames = statuses.map(function (color) { return color.name });
-
 var onLoadCallback = function () {
   var graphs = data;
 
