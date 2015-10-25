@@ -15,6 +15,9 @@ var sumOfValues = function (obj) {
 }
 // ____________________________________________________
 
+
+// data format     { columnOne: { stackOne: value, stackTwo: value } }
+// statuses format [{ name: 'greatName', hex: "#hexcolor" }]
 var GraphData = function (data, statuses) {
   // this could definitely use some attention
   // perhaps we need a range object?

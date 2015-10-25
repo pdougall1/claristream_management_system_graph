@@ -1,4 +1,6 @@
 var onLoadCallback = function () {
+
+  // statuses provides information about the order and value of he status being shown
   var statuses = [
     {
       name: 'assigned',
