@@ -46,19 +46,19 @@ MockData.graphOne = {
 
 MockData.graphTwo = {
   "0-2": {
-    "delivered":2,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered":1,
+    "forReview":2,
+    "inProgress":4,
+    "assigned":2
   },"3-5":{
     "delivered":2,
     "forReview":1,
     "inProgress":1,
     "assigned":1
   },"6-8":{
-    "delivered":3,
-    "forReview":1,
-    "inProgress":1,
+    "delivered":1,
+    "forReview":2,
+    "inProgress":3,
     "assigned":1
   },"9-11":{
     "delivered":4,
@@ -66,25 +66,25 @@ MockData.graphTwo = {
     "inProgress":1,
     "assigned":1
   },"12-14":{
-    "delivered":1,
+    "delivered":20,
     "forReview":1,
     "inProgress":1,
     "assigned":1
   },"15-17":{
-    "delivered":1,
-    "forReview":1,
+    "delivered":4,
+    "forReview":3,
     "inProgress":1,
     "assigned":1
   },"18-20":{
     "delivered":1,
-    "forReview":1,
-    "inProgress":1,
+    "forReview":5,
+    "inProgress":3,
     "assigned":1
   },"21+":{
     "delivered":1,
     "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "inProgress":6,
+    "assigned":3
   }
 }
 

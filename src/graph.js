@@ -3,10 +3,12 @@ var Graph = function (graphData, dimensions) {
   this.dimensions = dimensions;
 
   // create the basic svg element everything will hag on
-  this.stage = d3.select(this.dimensions.selector)
-    .append("svg")
-    .attr("width", this.dimensions.width)
-    .attr("height", this.dimensions.height)
+  this.addStage = function () {
+    this.stage = d3.select(this.dimensions.selector)
+      .append("svg")
+      .attr("width", this.dimensions.width)
+      .attr("height", this.dimensions.height)
+  }
 
   this.setScales = function () {
     this.xScale = d3.scale.ordinal()
@@ -82,11 +84,22 @@ var Graph = function (graphData, dimensions) {
       .style("fill", function(d) { return d.hex });
   }
 
-  this.setScales();
-  this.setAxes();
-  this.addXAxis();
-  this.addYAxis();
-  this.addHorizontalGridLines();
-  this.addRanges();
-  this.addStatusesToEachRange();
+  this.updataData = function(graphData) {
+    this.graphData = graphData;
+    this.stage.remove();
+    this.build();
+  }
+
+  this.build = function () {
+    this.addStage();
+    this.setScales();
+    this.setAxes();
+    this.addXAxis();
+    this.addYAxis();
+    this.addHorizontalGridLines();
+    this.addRanges();
+    this.addStatusesToEachRange();
+  }
+
+  this.build();
 }

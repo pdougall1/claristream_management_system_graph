@@ -1,5 +1,4 @@
 var onLoadCallback = function () {
-  var graphOne = MockData.graphOne;
   var statuses = [
     {
       name: 'assigned',
@@ -16,15 +15,17 @@ var onLoadCallback = function () {
     }
   ]
 
-  // I suggest just binding to the height and width of the containting element
-  // this makes it easier to manage things with CSS
-  var id         = "#stage";
-  var element    = $(id)
-  var margins    = {top: 20, right: 20, bottom: 30, left: 40}
-  var dimensions = new Dimensions(element, margins)
-  var graphData  = new GraphData(graphOne, statuses);
-  var graph      = new Graph(graphData, dimensions);
+  var id           = "#stage";
+  var element      = $(id)
+  var margins      = {top: 20, right: 20, bottom: 30, left: 40}
+  var dimensions   = new Dimensions(element, margins)
+  var graphOneData = new GraphData(MockData.graphOne, statuses);
+  var graphTwoData = new GraphData(MockData.graphTwo, statuses);
+  var graph        = new Graph(graphOneData, dimensions);
 
+  window.graph = graph;
+  window.one = graphOneData;
+  window.two = graphTwoData;
 }
 
 window.addEventListener('load', onLoadCallback, false )
