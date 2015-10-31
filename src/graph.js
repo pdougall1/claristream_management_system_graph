@@ -53,27 +53,12 @@ var Graph = function (graphData, dimensions) {
                                             this.yScale);
   }
 
-  this.addRanges = function () {
-    var xScale = this.xScale;
-    this.ranges = this.stage.selectAll(".range")
-      .data(this.graphData.parsedData)
-      .enter().append("g")
-      .attr("class", "g")
-      .attr("transform", function(d, i) { return "translate(" + xScale(i) + ",0)"; });
-  }
-
-  this.addStatusesToEachRange = function () {
-    var xScale = this.xScale;
-    var yScale = this.yScale;
-
-    this.statusBars = this.ranges.selectAll("rect")
-      .data(function (d) { return d.statuses })
-      .enter().append("rect")
-      .attr("width", xScale.rangeBand())
-      .attr("x", this.dimensions.leftMargin)
-      .attr("y", function(d) { return yScale(d.y1) })
-      .attr("height", function(d) { return yScale(d.y0) - yScale(d.y1) })
-      .style("fill", function(d) { return d.hex });
+  this.addStatuses = function () {
+    this.statusBars = new StatusBars(this.stage,
+                                     this.graphData,
+                                     this.dimensions,
+                                     this.yScale,
+                                     this.xScale);
   }
 
   this.build = function () {
@@ -83,8 +68,7 @@ var Graph = function (graphData, dimensions) {
     this.addXAxis();
     this.addYAxis();
     this.addHorizontalGridLines();
-    this.addRanges();
-    this.addStatusesToEachRange();
+    this.addStatuses();
     this.setDataUpdatedCallback();
   }
 
@@ -94,20 +78,13 @@ var Graph = function (graphData, dimensions) {
 
   this.updataData = function(newGraphData) {
     var graphData = this.setNewData(newGraphData);
-    this.setScales();
     var yScale = this.yScale;
-
-    this.statusBars = this.ranges.selectAll("rect")
-      .data(function (d, i) { return graphData.parsedData[i].statuses })
-      .transition()
-      .attr("y", function(d) { return yScale(d.y1) })
-      .attr("height", function(d) { return yScale(d.y0) - yScale(d.y1) });
-
     this.yAxisOnStage
       .transition()
       .call(this.yAxis.scale(yScale));
 
     this.horizontalGridlines.update(graphData);
+    this.statusBars.update(graphData);
   }
 
   this.setDataUpdatedCallback = function () {
@@ -119,6 +96,7 @@ var Graph = function (graphData, dimensions) {
 
   this.setNewData = function (newData) {
     this.graphData = newData;
+    this.setScales();
     this.setDataUpdatedCallback();
     return newData;
   }

@@ -4,7 +4,8 @@ var HorizontalGridlines = function (stage, graphData, dimensions, yScale) {
   this.dimensions = dimensions;
   this.yScale = yScale;
   this.selector = "line.horizontalGrid";
-  this.gridlines = this.stage.selectAll(this.selector);
+  this.gridlinesGroup = this.stage.append('g')
+  this.gridlines = this.gridlinesGroup.selectAll(this.selector);
 
   this.update = function (newData) {
     var yScale = this.yScale.domain([0, newData.maxRange]);
