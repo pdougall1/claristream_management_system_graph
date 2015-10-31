@@ -54,13 +54,11 @@ var Graph = function (graphData, dimensions) {
   }
 
   this.addStatuses = function () {
-    var statusBars = new StatusBars(this.stage,
-                                    this.graphData,
-                                    this.dimensions,
-                                    this.yScale,
-                                    this.xScale);
-    this.ranges = statusBars.ranges;
-    this.statusBars = statusBars.statusBars;
+    this.statusBars = new StatusBars(this.stage,
+                                     this.graphData,
+                                     this.dimensions,
+                                     this.yScale,
+                                     this.xScale);
   }
 
   this.build = function () {
@@ -82,17 +80,11 @@ var Graph = function (graphData, dimensions) {
     var graphData = this.setNewData(newGraphData);
     this.setScales();
     var yScale = this.yScale;
-
-    this.statusBars = this.ranges.selectAll("rect")
-      .data(function (d, i) { return graphData.parsedData[i].statuses })
-      .transition()
-      .attr("y", function(d) { return yScale(d.y1) })
-      .attr("height", function(d) { return yScale(d.y0) - yScale(d.y1) });
-
     this.yAxisOnStage
       .transition()
       .call(this.yAxis.scale(yScale));
 
+    this.statusBars.update(graphData);
     this.horizontalGridlines.update(graphData);
   }
 
