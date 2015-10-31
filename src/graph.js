@@ -78,14 +78,13 @@ var Graph = function (graphData, dimensions) {
 
   this.updataData = function(newGraphData) {
     var graphData = this.setNewData(newGraphData);
-    this.setScales();
     var yScale = this.yScale;
     this.yAxisOnStage
       .transition()
       .call(this.yAxis.scale(yScale));
 
-    this.statusBars.update(graphData);
     this.horizontalGridlines.update(graphData);
+    this.statusBars.update(graphData);
   }
 
   this.setDataUpdatedCallback = function () {
@@ -97,6 +96,7 @@ var Graph = function (graphData, dimensions) {
 
   this.setNewData = function (newData) {
     this.graphData = newData;
+    this.setScales();
     this.setDataUpdatedCallback();
     return newData;
   }
