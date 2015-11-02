@@ -1,6 +1,7 @@
-var Graph = function (graphData, dimensions) {
+var Graph = function (graphData, dimensions, config) {
   this.graphData  = graphData;
   this.dimensions = dimensions;
+  this.config     = config;
 
   // create the basic svg element everything will hag on
   this.addStage = function () {
@@ -50,7 +51,8 @@ var Graph = function (graphData, dimensions) {
     this.horizontalGridlines = new HorizontalGridlines(this.stage,
                                             this.graphData,
                                             this.dimensions,
-                                            this.yScale);
+                                            this.yScale,
+                                            this.config);
   }
 
   this.addStatuses = function () {
@@ -58,7 +60,8 @@ var Graph = function (graphData, dimensions) {
                                      this.graphData,
                                      this.dimensions,
                                      this.yScale,
-                                     this.xScale);
+                                     this.xScale,
+                                     this.config);
   }
 
   this.build = function () {
@@ -81,6 +84,7 @@ var Graph = function (graphData, dimensions) {
     var yScale = this.yScale;
     this.yAxisOnStage
       .transition()
+      .duration(this.config.duration)
       .call(this.yAxis.scale(yScale));
 
     this.horizontalGridlines.update(graphData);

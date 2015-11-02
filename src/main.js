@@ -19,12 +19,13 @@ var onLoadCallback = function () {
 
   // margins that give a little room on the edges, include the axes
   var margins      = { top: 20, right: 20, bottom: 30, left: 40 };
+  var config       = { duration: 500 };
   var dimensions   = new Dimensions($("#stage"), margins);
   var graphOneData = new GraphData(MockData.graphOne, statuses);
   var graphTwoData = new GraphData(MockData.graphTwo, statuses);
 
   // create a graph data object for each of your graphs
-  var graph        = new Graph(graphOneData, dimensions);
+  var graph        = new Graph(graphOneData, dimensions, config);
 
   // just providing toys to interact with in the console :)
   window.graph = graph;
