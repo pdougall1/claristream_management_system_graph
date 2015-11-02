@@ -9,6 +9,9 @@
 .x-axis path {
   fill: none;
 }
+.status:hover {
+  opacity: 0.6;
+}
 
 #tooltip {
         position: absolute;

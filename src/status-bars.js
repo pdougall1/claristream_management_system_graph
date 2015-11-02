@@ -28,6 +28,7 @@ var StatusBars = function (stage, graphData, dimensions, yScale, xScale, config)
     this.statusBars.enter().append("svg:a")
         .attr("xlink:href", function(d){return d.link;})
       .append("rect")
+        .attr("class", "status")
         .attr("width", xScale.rangeBand())
         .attr("x", this.dimensions.leftMargin)
         .attr("y", function(d) { return yScale(d.y1) })
@@ -39,8 +40,9 @@ var StatusBars = function (stage, graphData, dimensions, yScale, xScale, config)
           d3.select("#tooltip")
             .style("left", xPosition + "px")
             .style("top", yPosition + "px")
-            .select("#value")
-            .text(d.value + ' In Progress');
+
+          d3.select("#tooltip").select("#value")
+            .text(d.value + ' In Progress')
 
           d3.select("#tooltip").classed("hidden", false);
 
