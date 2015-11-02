@@ -20,12 +20,14 @@ var StatusBars = function (stage, graphData, dimensions, yScale, xScale, config)
     this.statusBars = this.ranges.selectAll("rect")
       .data(function (d, i) { return data.parsedData[i].statuses });
 
-    this.statusBars.enter().append("rect")
-      .attr("width", xScale.rangeBand())
-      .attr("x", this.dimensions.leftMargin)
-      .attr("y", function(d) { return yScale(d.y1) })
-      .attr("height", function(d) { return yScale(d.y0) - yScale(d.y1) })
-      .style("fill", function(d) { return d.hex });
+    this.statusBars.enter().append("svg:a")
+        .attr("xlink:href", function(d){return d.link;})
+      .append("rect")
+        .attr("width", xScale.rangeBand())
+        .attr("x", this.dimensions.leftMargin)
+        .attr("y", function(d) { return yScale(d.y1) })
+        .attr("height", function(d) { return yScale(d.y0) - yScale(d.y1) })
+        .style("fill", function(d) { return d.hex });
   }
 
   this.update = function (newData) {

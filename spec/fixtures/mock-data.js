@@ -2,89 +2,281 @@ var  MockData = {}
 
 MockData.graphOne = {
   "0-2": {
-    "delivered":2,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 2,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"3-5":{
-    "delivered":2,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 2,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"6-8":{
-    "delivered":3,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 3,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"9-11":{
-    "delivered":4,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 4,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"12-14":{
-    "delivered":1,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"15-17":{
-    "delivered":1,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"18-20":{
-    "delivered":1,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"21+":{
-    "delivered":1,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   }
 }
 
 MockData.graphTwo = {
   "0-2": {
-    "delivered":1,
-    "forReview":2,
-    "inProgress":4,
-    "assigned":2
+    "delivered": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 2,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 4,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 2,
+      link: "https://www.google.com/"
+    }
   },"3-5":{
-    "delivered":2,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 2,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"6-8":{
-    "delivered":1,
-    "forReview":2,
-    "inProgress":3,
-    "assigned":1
+    "delivered": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 2,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 3,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"9-11":{
-    "delivered":4,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 4,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"12-14":{
-    "delivered":20,
-    "forReview":1,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 20,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"15-17":{
-    "delivered":4,
-    "forReview":3,
-    "inProgress":1,
-    "assigned":1
+    "delivered": {
+      value: 4,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 3,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"18-20":{
-    "delivered":1,
-    "forReview":5,
-    "inProgress":3,
-    "assigned":1
+    "delivered": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 5,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 3,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 1,
+      link: "https://www.google.com/"
+    }
   },"21+":{
-    "delivered":1,
-    "forReview":1,
-    "inProgress":6,
-    "assigned":3
+    "delivered": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "forReview": {
+      value: 1,
+      link: "https://www.google.com/"
+    },
+    "inProgress": {
+      value: 6,
+      link: "https://www.google.com/"
+    },
+    "assigned": {
+      value: 3,
+      link: "https://www.google.com/"
+    },
   }
 }
 

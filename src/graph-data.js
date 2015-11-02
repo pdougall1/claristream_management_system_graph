@@ -33,7 +33,8 @@ var GraphData = function (data, statuses) {
         if (!status.inactive) {
           var newStatus = $.extend({}, status);
           newStatus.y0 = y0;
-          newStatus.y1 = y0 += data[name][status.name];
+          newStatus.y1 = y0 += data[name][status.name]['value'];
+          newStatus.link = data[name][status.name]['link']
           range.statuses.push(newStatus);
         }
       });
